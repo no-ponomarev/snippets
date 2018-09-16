@@ -44,6 +44,35 @@ bool dfs(int& dots, matrix_t& matrix, int i, int j, int rows, int cols) {
     return dots == 0;
 }
 
+// Another implementation
+void fill(vector<vector<char>>& grid, const int& x, const int& y) {
+        const char visited_symbol = 'x';        
+        int width = grid.size();        
+        int height = grid[0].size();
+        
+        queue<pair<int,int>> q;
+        q.emplace(x, y);
+        
+        while (!q.empty()) {
+            int i = q.front().first;
+            int j = q.front().second;
+            q.pop();
+            
+            if (grid[i][j] != visited_symbol) {            
+                grid[i][j] = visited_symbol;
+
+                if (i + 1 < width && grid[i + 1][j] == '1')
+                    q.emplace(i + 1, j);
+                if (j + 1 < height && grid[i][j + 1] == '1')
+                    q.emplace(i, j + 1);
+                if (i - 1 >= 0 && grid[i - 1][j] == '1')
+                    q.emplace(i - 1, j);
+                if (j - 1 >= 0 && grid[i][j - 1] == '1')
+                    q.emplace(i, j - 1);
+            }
+        }
+    }
+
 int main() {
     int rows, cols;
     cin >> rows >> cols;
